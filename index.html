@@ -1,72 +1,74 @@
 <!doctype html>
 <html lang="bn">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>দেশের ধাঁধা — Official Home</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="theme-color" content="#06132b"><title>দেশের ধাঁধা</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans Bengali",sans-serif;background:#06132b;color:#fff}
-.app{max-width:520px;min-height:100vh;margin:auto;background:linear-gradient(#092653,#041126);overflow:hidden}
-header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#061a38}
-.profile{display:flex;gap:10px;align-items:center}.avatar{width:52px;height:52px;border-radius:50%;background:#f6b52e;display:grid;place-items:center;font-size:28px;border:3px solid #ffd85a}
-.small{font-size:12px;color:#cdd8eb}.name{font-weight:700;font-size:17px}
-.coins{display:flex;gap:7px}.pill{background:#101f3d;border:1px solid #596987;border-radius:18px;padding:8px 10px;font-weight:700}
-.hero{text-align:center;padding:28px 18px 20px;background:radial-gradient(circle at 50% 30%,#54b8ff33,transparent 50%)}
-.logo{font-size:44px;font-weight:900;line-height:.9;color:#ffd13d;text-shadow:0 4px #8b3f00,0 7px 18px #000}
-.logo span{display:block;color:#eef7ff;text-shadow:0 4px #24517b}
-.tag{margin:14px auto;background:#9f170d;border-radius:18px;padding:8px 20px;width:max-content;font-weight:700}
-.play{display:block;width:92%;margin:22px auto 14px;padding:17px;border:0;border-radius:22px;background:linear-gradient(#a8ff42,#37a900);color:#fff;font-size:24px;font-weight:900;box-shadow:0 8px 25px #49ff4166;cursor:pointer}
-.shortcuts,.modes{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:12px 16px}
-.card{border-radius:18px;padding:18px 10px;text-align:center;font-weight:800;border:1px solid #ffffff33;box-shadow:inset 0 1px #fff3}
-.purple{background:linear-gradient(145deg,#7d18d9,#351060)}.blue{background:linear-gradient(145deg,#138cf5,#073b87)}
-.orange{background:linear-gradient(145deg,#ff9e16,#873600)}.red{background:linear-gradient(145deg,#ef3d70,#71132e)}
-h2{text-align:center;font-size:20px;margin:12px}.mode{min-height:120px}.icon{font-size:34px;display:block;margin-bottom:7px}
-button{font-family:inherit}.bottom{position:sticky;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);background:#07152d;border-top:1px solid #53627c;padding:8px 5px}.nav{text-align:center;font-size:12px;color:#dce5f5}.nav.active{color:#ffd34b}.nav b{display:block;font-size:22px}
-#toast{position:fixed;left:50%;bottom:75px;transform:translateX(-50%);background:#fff;color:#07152d;padding:10px 16px;border-radius:20px;font-weight:700;display:none}
-</style>
+*{box-sizing:border-box}body{margin:0;background:#020916;color:white;font-family:Arial,"Noto Sans Bengali",sans-serif}
+.app{max-width:520px;min-height:100vh;margin:auto;background:linear-gradient(180deg,#092653,#041126);position:relative;overflow:hidden}
+header{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:#061a38;position:sticky;top:0;z-index:4}
+.profile{display:flex;gap:9px;align-items:center}.avatar{width:45px;height:45px;border-radius:50%;object-fit:cover;background:#f6b52e;display:block;border:2px solid #ffd85a}.name{font-weight:800}.small{font-size:11px;color:#cbd7ec}
+.pill{background:#112442;border:1px solid #536789;border-radius:16px;padding:7px 9px;font-size:13px;font-weight:700}
+.screen{display:none;padding-bottom:76px}.screen.active{display:block}
+.hero{text-align:center;padding:32px 18px 22px;background:radial-gradient(circle,#47b7ff38,transparent 58%)}
+.logo{font-size:43px;font-weight:900;line-height:.9;color:#ffd23f;text-shadow:0 4px #873b00}.logo span{display:block;color:#eef7ff;text-shadow:0 4px #24517b}
+.tag{display:inline-block;margin:14px auto;background:#a31a10;padding:7px 18px;border-radius:18px;font-weight:800}
+.play,.answer,.primary{width:92%;border:0;border-radius:20px;padding:15px;margin:10px auto;background:linear-gradient(#a8ff42,#36a900);color:white;font-size:21px;font-weight:900;box-shadow:0 7px 20px #4cff4260}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:10px 14px}.card{border:1px solid #ffffff2b;border-radius:18px;padding:18px 10px;text-align:center;font-weight:800;box-shadow:inset 0 1px #fff3}.purple{background:linear-gradient(145deg,#8019d8,#34105d)}.blue{background:linear-gradient(145deg,#168ef7,#063a83)}.orange{background:linear-gradient(145deg,#ff9d16,#833500)}.red{background:linear-gradient(145deg,#ed3c70,#70152f)}.teal{background:linear-gradient(145deg,#16b6a5,#07544c)}
+h2{text-align:center;font-size:20px;margin:13px 0}.icon{font-size:31px;display:block;margin-bottom:6px}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);display:grid;grid-template-columns:repeat(5,1fr);background:#07152d;border-top:1px solid #52617a;padding:7px 3px;z-index:5}.nav{text-align:center;font-size:11px;color:#dce5f5}.nav b{display:block;font-size:21px}.nav.active{color:#ffd34b}
+.quiz{padding:20px 15px}.bar{height:10px;background:#172b4b;border-radius:10px;overflow:hidden}.fill{height:100%;background:#67df37;width:30%}.timer{text-align:center;color:#ffd34b;font-size:22px;font-weight:900;margin:15px}.question{background:#0c1f3c;border:1px solid #536a8c;border-radius:20px;padding:24px 16px;text-align:center;font-size:23px;font-weight:800;line-height:1.45}.answers{display:grid;gap:10px;margin-top:18px}.answer{width:100%;margin:0;background:linear-gradient(145deg,#173e70,#0c2444);font-size:17px;text-align:left}.answer.correct{background:#168b43}.answer.wrong{background:#a5233c}.back{background:none;border:1px solid #71829e;color:white;border-radius:14px;padding:9px 14px;margin-bottom:10px}
+.modal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:10}.modal.show{display:flex}.modalbox{width:88%;background:#0a1e3b;border:1px solid #6880a2;border-radius:24px;padding:25px;text-align:center}
+</style></head>
+<body><div class="app">
+<header><div class="profile"><img class="avatar" src="player-photo.jpg" alt="Player"><div><div class="name">Player123</div><div class="small">⭐ 1250 / 2000 • লেভেল 15</div></div></div><div class="pill" onclick="beep(700)">🔊</div><div class="pill">🪙 <span id="coins">12,450</span></div></header>
 
-<meta name="theme-color" content="#06132b">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="দেশের ধাঁধা">
-<link rel="manifest" href="manifest.json">
-</head>
-<body>
-<div class="app">
-<header>
-<div class="profile"><div class="avatar">🧑</div><div><div class="name">Player123</div><div class="small">⭐ 1250 / 2000 • লেভেল 15</div></div></div>
-<div class="coins"><div class="pill">🪙 12,450</div><div class="pill">💎 250</div></div>
-</header>
-<section class="hero">
-<div class="logo">দেশের<span>ধাঁধা</span></div>
-<div class="tag">জানও হবে, মজাও হবে!</div>
-<button class="play" onclick="startGame()">▶ খেলা শুরু করুন</button>
-</section>
-<div class="shortcuts">
-<div class="card purple" onclick="toast('মাল্টিপ্লেয়ার খুলছে…')">👥<br>মাল্টিপ্লেয়ার</div>
-<div class="card blue" onclick="toast('লিডারবোর্ড খুলছে…')">🏆<br>লিডারবোর্ড</div>
-<div class="card orange" onclick="toast('দৈনিক পুরস্কার খুলছে…')">🎁<br>দৈনিক পুরস্কার</div>
-<div class="card red" onclick="toast('ডেইলি চ্যালেঞ্জ খুলছে…')">📅<br>ডেইলি চ্যালেঞ্জ</div>
+<section id="home" class="screen active">
+<div style="margin:14px;border:1px solid #ffffff33;border-radius:22px;padding:12px;background:linear-gradient(145deg,#102d52,#07172d);display:flex;align-items:center;gap:14px;box-shadow:0 8px 25px #0006">
+<img src="player-photo.jpg" style="width:82px;height:82px;border-radius:18px;object-fit:cover;border:2px solid #ffd34b">
+<div><b style="font-size:18px">স্বাগতম, Player123!</b><div class="small" style="margin-top:5px">আজকের চ্যালেঞ্জ খেলুন এবং XP জিতুন 🎮</div></div>
 </div>
-<h2>✦ জনপ্রিয় গেমসমূহ ✦</h2>
-<div class="modes">
-<div class="card mode purple" onclick="startGame()">🧠<span class="icon">ধাঁধা কুইজ</span>খেলুন</div>
-<div class="card mode" style="background:linear-gradient(145deg,#19b64a,#075c2b)" onclick="startGame()">🔤<span class="icon">শব্দ খেলা</span>খেলুন</div>
-<div class="card mode blue" onclick="startGame()">🔢<span class="icon">সংখ্যা ধাঁধা</span>খেলুন</div>
-<div class="card mode orange" onclick="startGame()">⏱️<span class="icon">টাইম চ্যালেঞ্জ</span>খেলুন</div>
-<div class="card mode red" onclick="startGame()">👫<span class="icon">বন্ধুর সাথে খেলুন</span>খেলুন</div>
-<div class="card mode" style="background:linear-gradient(145deg,#14a89b,#07544e)" onclick="startGame()">💰<span class="icon">কে হবে মিলিয়নিয়ার</span>খেলুন</div>
+<div class="hero"><div class="logo">দেশের<span>ধাঁধা</span></div><div class="tag">জানও হবে, মজাও হবে!</div><button class="play" onclick="openQuiz()">▶ খেলা শুরু করুন</button></div>
+<div class="grid"><div class="card purple" onclick="openMulti()">👥<br>মাল্টিপ্লেয়ার</div><div class="card blue" onclick="showBoard()">🏆<br>লিডারবোর্ড</div><div class="card orange">🎁<br>দৈনিক পুরস্কার</div><div class="card red">📅<br>ডেইলি চ্যালেঞ্জ</div></div>
+<h2>✦ জনপ্রিয় গেমসমূহ ✦</h2><div class="grid">
+<div class="card purple" onclick="openQuiz()">🧠<span class="icon">ধাঁধা কুইজ</span>খেলুন</div><div class="card teal" onclick="openQuiz()">🔤<span class="icon">শব্দ খেলা</span>খেলুন</div>
+<div class="card blue" onclick="openQuiz()">🔢<span class="icon">সংখ্যা ধাঁধা</span>খেলুন</div><div class="card orange" onclick="openQuiz()">⏱️<span class="icon">টাইম চ্যালেঞ্জ</span>খেলুন</div>
+</div></section>
+
+<section id="quiz" class="screen"><div class="quiz"><button class="back" onclick="show('home')">← হোমে ফিরুন</button><div style="display:flex;justify-content:space-between"><b>ধাঁধা কুইজ</b><b id="score">স্কোর: 0</b></div><br><div class="bar"><div id="fill" class="fill"></div></div><div id="timer" class="timer">⏱ 15</div><div id="question" class="question"></div><div id="answers" class="answers"></div></div></section>
+
+
+<section id="multi" class="screen"><div class="quiz"><button class="back" onclick="show('home')">← হোমে ফিরুন</button><h2>👥 মাল্টিপ্লেয়ার</h2>
+<div class="card blue" style="margin:10px 0">🎮 Quick Match<br><small>অন্য খেলোয়াড়ের সাথে দ্রুত ম্যাচ</small><button class="primary" onclick="match()">ম্যাচ খুঁজুন</button></div>
+<div class="card purple" style="margin:10px 0">🔒 Private Room<br><small>বন্ধুকে কোড দিয়ে আমন্ত্রণ করুন</small><button class="primary" onclick="room()">রুম তৈরি করুন</button></div></div></section>
+<section id="board" class="screen"><div class="quiz"><button class="back" onclick="show('home')">← হোমে ফিরুন</button><h2>🏆 লিডারবোর্ড</h2>
+<div id="boardlist"></div></div></section>
+<section id="profile" class="screen"><div class="hero"><div class="avatar" style="margin:auto">🧑</div><h2>Player123</h2><p>লেভেল 15 • ⭐ 1250 XP</p></div><div class="grid"><div class="card blue">🏆<br>সেরা স্কোর<br><b id="best">0</b></div><div class="card purple">🎮<br>মোট গেম<br><b id="games">0</b></div></div></section>
+
+<nav class="bottom"><div class="nav active" onclick="show('home',this)"><b>⌂</b>হোম</div><div class="nav" onclick="openQuiz()"><b>🎮</b>গেমস</div><div class="nav" onclick="show('profile',this)"><b>👤</b>প্রোফাইল</div><div class="nav"><b>🏆</b>অর্জন</div><div class="nav"><b>🛒</b>স্টোর</div></nav>
+<div id="modal" class="modal"><div class="modalbox"><h2>🎉 অসাধারণ!</h2><p id="result"></p><button class="primary" onclick="closeModal();openQuiz()">আবার খেলুন</button><button class="back" onclick="closeModal();show('home')">হোমে যান</button></div></div>
 </div>
-<div class="bottom">
-<div class="nav active"><b>⌂</b>হোম</div><div class="nav"><b>🎮</b>গেমস</div><div class="nav"><b>👥</b>বন্ধু</div><div class="nav"><b>🏆</b>অর্জন</div><div class="nav"><b>🛒</b>স্টোর</div>
-</div>
-</div>
-<div id="toast"></div>
 <script>
-function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',1600)}
-function startGame(){toast('গেম শুরু হচ্ছে… 🎮')}
-</script>
-<script>
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
+const qs=[
+["বাংলাদেশের জাতীয় ফুল কোনটি?",["শাপলা","গোলাপ","জুঁই","বেলি"],0],
+["বাংলাদেশের রাজধানী কোনটি?",["চট্টগ্রাম","ঢাকা","সিলেট","রাজশাহী"],1],
+["বাংলাদেশের জাতীয় ফল কোনটি?",["আম","কাঁঠাল","লিচু","কলা"],1],
+["পদ্মা সেতু কোন নদীর ওপর?",["যমুনা","মেঘনা","পদ্মা","কর্ণফুলী"],2],
+["বাংলাদেশের জাতীয় পাখি কোনটি?",["দোয়েল","শালিক","কোকিল","ময়ূর"],0]
+];
+let i=0,score=0,time=15,timer=null,games=0,best=0;
+function show(id,el){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));if(el)el.classList.add('active')}
+function openQuiz(){i=0;score=0;games++;load();show('quiz')}
+function load(){if(i>=qs.length){finish();return}let q=qs[i];document.getElementById('question').textContent=q[0];document.getElementById('score').textContent='স্কোর: '+score;document.getElementById('fill').style.width=((i)/qs.length*100)+'%';let a=document.getElementById('answers');a.innerHTML='';q[1].forEach((x,n)=>{let b=document.createElement('button');b.className='answer';b.textContent=['A','B','C','D'][n]+'. '+x;b.onclick=()=>answer(n,b);a.appendChild(b)});clearInterval(timer);time=15;document.getElementById('timer').textContent='⏱ '+time;timer=setInterval(()=>{time--;document.getElementById('timer').textContent='⏱ '+time;if(time<=0){clearInterval(timer);next(-1)}},1000)}
+function answer(n,b){let q=qs[i];beep(n===q[2]?880:220,.12,n===q[2]?'sine':'square');document.querySelectorAll('.answer').forEach(x=>x.disabled=true);if(n===q[2]){score+=100;b.classList.add('correct')}else{b.classList.add('wrong');document.querySelectorAll('.answer')[q[2]].classList.add('correct')}setTimeout(()=>next(n),500)}
+function next(){clearInterval(timer);i++;load()}
+function finish(){best=Math.max(best,score);document.getElementById('best').textContent=best;document.getElementById('games').textContent=games;document.getElementById('result').textContent='আপনার স্কোর: '+score+' / '+(qs.length*100)+' — '+(score>=300?'দারুণ খেলেছেন! 🎊':'আরেকবার চেষ্টা করুন! 💪');document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+
+const AudioCtx=window.AudioContext||window.webkitAudioContext; let audio;
+function beep(freq=600,dur=.09,type='sine'){try{audio=audio||new AudioCtx();let o=audio.createOscillator(),g=audio.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(.06,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+dur);o.connect(g);g.connect(audio.destination);o.start();o.stop(audio.currentTime+dur)}catch(e){}}
+function openMulti(){beep(500);show('multi')}
+function match(){beep(700);setTimeout(()=>{beep(900);alert('🎮 প্রতিপক্ষ পাওয়া গেছে! Demo match শুরু হচ্ছে।')},700)}
+function room(){beep(650);alert('🔐 আপনার রুম কোড: DD-4821')}
+function showBoard(){beep(800);let rows=[['🥇','QuizMaster','9,850'],['🥈','DhakaHero','8,740'],['🥉','PuzzleKing','7,920'],['4','Player123',String(best)],['5','BrainStar','6,480']];document.getElementById('boardlist').innerHTML=rows.map(r=>`<div class="card blue" style="margin:8px 0;text-align:left">${r[0]} &nbsp; <b>${r[1]}</b><span style="float:right">${r[2]} pts</span></div>`).join('');show('board');}
 </script></body></html>
