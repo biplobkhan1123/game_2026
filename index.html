@@ -19,9 +19,11 @@ h2{text-align:center;font-size:20px;margin:13px 0}.icon{font-size:31px;display:b
 .bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);display:grid;grid-template-columns:repeat(5,1fr);background:#07152d;border-top:1px solid #52617a;padding:7px 3px;z-index:5}.nav{text-align:center;font-size:11px;color:#dce5f5}.nav b{display:block;font-size:21px}.nav.active{color:#ffd34b}
 .quiz{padding:20px 15px}.bar{height:10px;background:#172b4b;border-radius:10px;overflow:hidden}.fill{height:100%;background:#67df37;width:30%}.timer{text-align:center;color:#ffd34b;font-size:22px;font-weight:900;margin:15px}.question{background:#0c1f3c;border:1px solid #536a8c;border-radius:20px;padding:24px 16px;text-align:center;font-size:23px;font-weight:800;line-height:1.45}.answers{display:grid;gap:10px;margin-top:18px}.answer{width:100%;margin:0;background:linear-gradient(145deg,#173e70,#0c2444);font-size:17px;text-align:left}.answer.correct{background:#168b43}.answer.wrong{background:#a5233c}.back{background:none;border:1px solid #71829e;color:white;border-radius:14px;padding:9px 14px;margin-bottom:10px}
 .modal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:10}.modal.show{display:flex}.modalbox{width:88%;background:#0a1e3b;border:1px solid #6880a2;border-radius:24px;padding:25px;text-align:center}
+
+.toast{position:fixed;left:50%;bottom:82px;transform:translateX(-50%);background:#10284b;border:1px solid #6c83a6;padding:11px 16px;border-radius:22px;z-index:20;display:none;font-weight:800;box-shadow:0 8px 25px #0008}.achievement{background:linear-gradient(145deg,#ffd84b,#c66a00);color:#201300;border-radius:14px;padding:8px;margin:6px 0;font-weight:900}
 </style></head>
 <body><div class="app">
-<header><div class="profile"><img class="avatar" src="player-photo.jpg" alt="Player"><div><div class="name">Player123</div><div class="small">⭐ 1250 / 2000 • লেভেল 15</div></div></div><div class="pill" onclick="beep(700)">🔊</div><div class="pill">🪙 <span id="coins">12,450</span></div></header>
+<header><div class="profile"><img class="avatar" src="player-photo.jpg" alt="Player"><div><div class="name">Player123</div><div class="small">⭐ 1250 / 2000 • লেভেল 15</div></div></div><div class="pill" onclick="toggleMute()" id="soundBtn">🔊</div><div class="pill">🪙 <span id="coins">12,450</span></div></header>
 
 <section id="home" class="screen active">
 <div style="margin:14px;border:1px solid #ffffff33;border-radius:22px;padding:12px;background:linear-gradient(145deg,#102d52,#07172d);display:flex;align-items:center;gap:14px;box-shadow:0 8px 25px #0006">
@@ -43,7 +45,7 @@ h2{text-align:center;font-size:20px;margin:13px 0}.icon{font-size:31px;display:b
 <div class="card purple" style="margin:10px 0">🔒 Private Room<br><small>বন্ধুকে কোড দিয়ে আমন্ত্রণ করুন</small><button class="primary" onclick="room()">রুম তৈরি করুন</button></div></div></section>
 <section id="board" class="screen"><div class="quiz"><button class="back" onclick="show('home')">← হোমে ফিরুন</button><h2>🏆 লিডারবোর্ড</h2>
 <div id="boardlist"></div></div></section>
-<section id="profile" class="screen"><div class="hero"><div class="avatar" style="margin:auto">🧑</div><h2>Player123</h2><p>লেভেল 15 • ⭐ 1250 XP</p></div><div class="grid"><div class="card blue">🏆<br>সেরা স্কোর<br><b id="best">0</b></div><div class="card purple">🎮<br>মোট গেম<br><b id="games">0</b></div></div></section>
+<section id="profile" class="screen"><div class="hero"><div class="avatar" style="margin:auto">🧑</div><h2>Player123</h2><p>লেভেল 15 • ⭐ 1250 XP</p></div><div class="grid"><div class="card blue">🏆<br>সেরা স্কোর<br><b id="best">0</b></div><div class="card purple">🎮<br>মোট গেম<br><b id="games">0</b></div><div class="card teal">🔥<br>স্ট্রিক<br><b id="streak">0</b> দিন</div><div class="card orange">🎯<br>অর্জন<br><b id="achievements">0</b></div></div></section>
 
 <nav class="bottom"><div class="nav active" onclick="show('home',this)"><b>⌂</b>হোম</div><div class="nav" onclick="openQuiz()"><b>🎮</b>গেমস</div><div class="nav" onclick="show('profile',this)"><b>👤</b>প্রোফাইল</div><div class="nav"><b>🏆</b>অর্জন</div><div class="nav"><b>🛒</b>স্টোর</div></nav>
 <div id="modal" class="modal"><div class="modalbox"><h2>🎉 অসাধারণ!</h2><p id="result"></p><button class="primary" onclick="closeModal();openQuiz()">আবার খেলুন</button><button class="back" onclick="closeModal();show('home')">হোমে যান</button></div></div>
@@ -54,21 +56,33 @@ const qs=[
 ["বাংলাদেশের রাজধানী কোনটি?",["চট্টগ্রাম","ঢাকা","সিলেট","রাজশাহী"],1],
 ["বাংলাদেশের জাতীয় ফল কোনটি?",["আম","কাঁঠাল","লিচু","কলা"],1],
 ["পদ্মা সেতু কোন নদীর ওপর?",["যমুনা","মেঘনা","পদ্মা","কর্ণফুলী"],2],
-["বাংলাদেশের জাতীয় পাখি কোনটি?",["দোয়েল","শালিক","কোকিল","ময়ূর"],0]
+["বাংলাদেশের জাতীয় পাখি কোনটি?",["দোয়েল","শালিক","কোকিল","ময়ূর"],0],
+["বাংলাদেশের জাতীয় পশু কোনটি?",["হাতি","রয়েল বেঙ্গল টাইগার","হরিণ","মহিষ"],1],
+["কক্সবাজার বিখ্যাত কী জন্য?",["চা-বাগান","সমুদ্র সৈকত","পাহাড়","মসজিদ"],1],
+["বাংলাদেশের স্বাধীনতা দিবস কবে?",["২১ ফেব্রুয়ারি","২৬ মার্চ","১৬ ডিসেম্বর","১৪ এপ্রিল"],1],
+["বাংলাদেশের জাতীয় খেলা কোনটি?",["ক্রিকেট","ফুটবল","কাবাডি","হকি"],2]
 ];
-let i=0,score=0,time=15,timer=null,games=0,best=0;
+let i=0,score=0,time=15,timer=null;
+let saved=JSON.parse(localStorage.getItem('dd_save')||'{"games":0,"best":0,"streak":0,"achievements":0,"coins":12450}');
+let games=saved.games,best=saved.best,streak=saved.streak,achievements=saved.achievements,coins=saved.coins;
+let muted=localStorage.getItem('dd_mute')==='1';
+function save(){localStorage.setItem('dd_save',JSON.stringify({games,best,streak,achievements,coins}));}
+function refreshProfile(){document.getElementById('best').textContent=best;document.getElementById('games').textContent=games;document.getElementById('streak').textContent=streak;document.getElementById('achievements').textContent=achievements;document.getElementById('coins').textContent=coins.toLocaleString('en-US');}
+
 function show(id,el){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));if(el)el.classList.add('active')}
-function openQuiz(){i=0;score=0;games++;load();show('quiz')}
+function openQuiz(){i=0;score=0;games++;save();refreshProfile();load();show('quiz')}
 function load(){if(i>=qs.length){finish();return}let q=qs[i];document.getElementById('question').textContent=q[0];document.getElementById('score').textContent='স্কোর: '+score;document.getElementById('fill').style.width=((i)/qs.length*100)+'%';let a=document.getElementById('answers');a.innerHTML='';q[1].forEach((x,n)=>{let b=document.createElement('button');b.className='answer';b.textContent=['A','B','C','D'][n]+'. '+x;b.onclick=()=>answer(n,b);a.appendChild(b)});clearInterval(timer);time=15;document.getElementById('timer').textContent='⏱ '+time;timer=setInterval(()=>{time--;document.getElementById('timer').textContent='⏱ '+time;if(time<=0){clearInterval(timer);next(-1)}},1000)}
 function answer(n,b){let q=qs[i];beep(n===q[2]?880:220,.12,n===q[2]?'sine':'square');document.querySelectorAll('.answer').forEach(x=>x.disabled=true);if(n===q[2]){score+=100;b.classList.add('correct')}else{b.classList.add('wrong');document.querySelectorAll('.answer')[q[2]].classList.add('correct')}setTimeout(()=>next(n),500)}
 function next(){clearInterval(timer);i++;load()}
-function finish(){best=Math.max(best,score);document.getElementById('best').textContent=best;document.getElementById('games').textContent=games;document.getElementById('result').textContent='আপনার স্কোর: '+score+' / '+(qs.length*100)+' — '+(score>=300?'দারুণ খেলেছেন! 🎊':'আরেকবার চেষ্টা করুন! 💪');document.getElementById('modal').classList.add('show')}
+function finish(){best=Math.max(best,score);if(score>=400){achievements++;coins+=250;streak++;}save();refreshProfile();document.getElementById('result').innerHTML='আপনার স্কোর: '+score+' / '+(qs.length*100)+' — '+(score>=400?'দারুণ খেলেছেন! 🎊':'আরেকবার চেষ্টা করুন! 💪')+(score>=400?'<div class="achievement">🏅 +250 Coins • Achievement Unlocked!</div>':'');document.getElementById('modal').classList.add('show')}
 function closeModal(){document.getElementById('modal').classList.remove('show')}
 
 const AudioCtx=window.AudioContext||window.webkitAudioContext; let audio;
-function beep(freq=600,dur=.09,type='sine'){try{audio=audio||new AudioCtx();let o=audio.createOscillator(),g=audio.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(.06,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+dur);o.connect(g);g.connect(audio.destination);o.start();o.stop(audio.currentTime+dur)}catch(e){}}
+function beep(freq=600,dur=.09,type='sine'){if(muted)return;try{audio=audio||new AudioCtx();let o=audio.createOscillator(),g=audio.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(.06,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+dur);o.connect(g);g.connect(audio.destination);o.start();o.stop(audio.currentTime+dur)}catch(e){}}
+function toggleMute(){muted=!muted;localStorage.setItem('dd_mute',muted?'1':'0');document.getElementById('soundBtn').textContent=muted?'🔇':'🔊';toast(muted?'সাউন্ড বন্ধ':'সাউন্ড চালু');}
+function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>x.style.display='none',1700)}
 function openMulti(){beep(500);show('multi')}
 function match(){beep(700);setTimeout(()=>{beep(900);alert('🎮 প্রতিপক্ষ পাওয়া গেছে! Demo match শুরু হচ্ছে।')},700)}
 function room(){beep(650);alert('🔐 আপনার রুম কোড: DD-4821')}
 function showBoard(){beep(800);let rows=[['🥇','QuizMaster','9,850'],['🥈','DhakaHero','8,740'],['🥉','PuzzleKing','7,920'],['4','Player123',String(best)],['5','BrainStar','6,480']];document.getElementById('boardlist').innerHTML=rows.map(r=>`<div class="card blue" style="margin:8px 0;text-align:left">${r[0]} &nbsp; <b>${r[1]}</b><span style="float:right">${r[2]} pts</span></div>`).join('');show('board');}
-</script></body></html>
+refreshProfile();document.getElementById("soundBtn").textContent=muted?"🔇":"🔊";</script></body></html>
