@@ -1,0 +1,10 @@
+{
+  "name": "দেশের ধাঁধা",
+  "short_name": "দেশের ধাঁধা",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#06132b",
+  "theme_color": "#06132b",
+  "lang": "bn"
+}
